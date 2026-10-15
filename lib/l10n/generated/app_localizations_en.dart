@@ -373,4 +373,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Couldn\'t check for updates. Check your internet connection and try again.';
+
+  @override
+  String get importFailed =>
+      'Couldn\'t import that video. Please try another one.';
+
+  @override
+  String get videoUnreadable => 'Couldn\'t read that video file.';
+
+  @override
+  String get previewLoadFailed => 'Couldn\'t load the preview.';
+
+  @override
+  String get retry => 'Retry';
 }

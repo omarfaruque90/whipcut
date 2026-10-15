@@ -471,5 +471,21 @@
   "updateCheckFailed": "আপডেট চেক করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।",
   "@updateCheckFailed": {
     "description": "Message when the update check itself fails (offline, timeout)"
+  },
+  "importFailed": "ভিডিওটি import করা যায়নি। অন্য একটি চেষ্টা করুন।",
+  "@importFailed": {
+    "description": "Message when copying an imported video into app storage fails"
+  },
+  "videoUnreadable": "ভিডিও ফাইলটি পড়া যায়নি।",
+  "@videoUnreadable": {
+    "description": "Message when a picked video can't be opened for preview"
+  },
+  "previewLoadFailed": "প্রিভিউ লোড করা যায়নি।",
+  "@previewLoadFailed": {
+    "description": "Message when the editor preview player fails to load a clip"
+  },
+  "retry": "আবার চেষ্টা করুন",
+  "@retry": {
+    "description": "Generic retry action"
   }
 }

@@ -805,6 +805,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t check for updates. Check your internet connection and try again.'**
   String get updateCheckFailed;
+
+  /// Message when copying an imported video into app storage fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t import that video. Please try another one.'**
+  String get importFailed;
+
+  /// Message when a picked video can't be opened for preview
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t read that video file.'**
+  String get videoUnreadable;
+
+  /// Message when the editor preview player fails to load a clip
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the preview.'**
+  String get previewLoadFailed;
+
+  /// Generic retry action
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate

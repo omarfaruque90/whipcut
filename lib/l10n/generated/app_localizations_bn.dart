@@ -375,4 +375,17 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'আপডেট চেক করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।';
+
+  @override
+  String get importFailed =>
+      'ভিডিওটি import করা যায়নি। অন্য একটি চেষ্টা করুন।';
+
+  @override
+  String get videoUnreadable => 'ভিডিও ফাইলটি পড়া যায়নি।';
+
+  @override
+  String get previewLoadFailed => 'প্রিভিউ লোড করা যায়নি।';
+
+  @override
+  String get retry => 'আবার চেষ্টা করুন';
 }

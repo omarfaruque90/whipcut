@@ -61,6 +61,10 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   int _previewToken = 0;
   bool _wasPlaying = false;
 
+  /// True when the preview player failed to load the current clip.
+  /// Surfaced in the preview area with a retry button (never silent).
+  bool _previewError = false;
+
   Timer? _transportTimer;
   Timer? _saveTimer;
 
@@ -70,6 +74,18 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     _transportTimer =
         Timer.periodic(const Duration(milliseconds: 100), (_) => _tickTransport());
     WidgetsBinding.instance.addPostFrameCallback((_) => _syncPreview());
+  }
+
+  @override
+  void didUpdateWidget(covariant EditorScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The timeline provider family is keyed by project instance — a new
+    // instance means a new timeline state, so re-sync the preview player.
+    if (!identical(oldWidget.project, widget.project)) {
+      _previewPath = null;
+      _previewError = false;
+      _syncPreview();
+    }
   }
 
   @override
@@ -83,34 +99,74 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   // Preview ---------------------------------------------------------------
 
   /// Loads the first playable video clip into the preview player.
+  /// Never fails silently: load problems set [_previewError], which the
+  /// preview area renders with a retry button.
   Future<void> _syncPreview() async {
     final token = ++_previewToken;
-    final clip = ref
-        .read(timelineEditorProvider(widget.project).notifier)
-        .firstPlayableVideoClip;
-    final path = clip?.mediaPath;
-    if (path == _previewPath) return;
+    String? path;
+    try {
+      path = ref
+          .read(timelineEditorProvider(widget.project).notifier)
+          .firstPlayableVideoClip
+          ?.mediaPath;
+    } catch (_) {
+      path = null;
+    }
+    if (path == _previewPath && !_previewError) return;
     _previewPath = path;
+    _previewError = false;
 
     final old = _previewController;
     _previewController = null;
-    await old?.dispose();
+    try {
+      await old?.dispose();
+    } catch (_) {
+      // Best-effort dispose.
+    }
     if (!mounted || token != _previewToken) return;
     setState(() {});
 
     if (path == null) return;
+    if (!File(path).existsSync()) {
+      _failPreview(token);
+      return;
+    }
     final controller = VideoPlayerController.file(File(path));
     _previewController = controller;
     try {
       await controller.initialize();
     } catch (_) {
-      return; // unreadable file — placeholder stays
+      try {
+        await controller.dispose();
+      } catch (_) {}
+      _previewController = null;
+      _failPreview(token);
+      return;
     }
     if (!mounted || token != _previewToken) {
-      await controller.dispose();
+      try {
+        await controller.dispose();
+      } catch (_) {}
       return;
     }
     setState(() {});
+  }
+
+  /// Marks the preview as failed (with the path cleared so the next sync
+  /// retries) and refreshes the UI — but only when [token] is still the
+  /// latest attempt, so a stale failure can't clobber a newer success.
+  void _failPreview(int token) {
+    if (token != _previewToken) return;
+    _previewError = true;
+    _previewPath = null;
+    if (mounted) setState(() {});
+  }
+
+  /// Manual retry from the preview error state.
+  void _retryPreview() {
+    _previewError = false;
+    _previewPath = null;
+    _syncPreview();
   }
 
   /// 10Hz transport tick: follows the preview player's position.
@@ -158,12 +214,37 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     final picked =
         await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (picked == null) return;
-    final duration = await probeVideoDuration(picked.path);
+
+    // Copy into our own storage first: picker cache paths can vanish or be
+    // unreadable later, which left the preview black with a dead play button.
+    late final String mediaPath;
+    try {
+      mediaPath = await copyPickedVideoToAppStorage(picked.path);
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(AppLocalizations.of(context).importFailed)),
+      );
+      return;
+    }
+
+    late final double duration;
+    try {
+      duration = await probeVideoDuration(mediaPath);
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(AppLocalizations.of(context).videoUnreadable)),
+      );
+      return;
+    }
     if (!mounted) return;
     ref.read(timelineEditorProvider(widget.project).notifier).addClip(
           TrackType.video,
           buildImportedVideoClip(
-            mediaPath: picked.path,
+            mediaPath: mediaPath,
             sourceDuration: duration,
           ),
         );
@@ -379,6 +460,30 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         colorFilter:
             ColorFilter.matrix(colorMatrixFor(adjust)),
         child: VideoPlayer(controller),
+      );
+    } else if (_previewError) {
+      content = Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.error_outline,
+              size: 56,
+              color: WhipcutTheme.textSecondary,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l10n.previewLoadFailed,
+              style: const TextStyle(color: WhipcutTheme.textSecondary),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton.icon(
+              onPressed: _retryPreview,
+              icon: const Icon(Icons.refresh),
+              label: Text(l10n.retry),
+            ),
+          ],
+        ),
       );
     } else if (_previewPath != null) {
       content = const Center(child: CircularProgressIndicator());

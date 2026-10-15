@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 import 'package:whipcut/models/color_adjust.dart';
@@ -333,6 +334,30 @@ Future<double> probeVideoDuration(String path) async {
   } finally {
     await controller.dispose();
   }
+}
+
+/// Copies a picked video into Whipcut's private media store and returns the
+/// new path.
+///
+/// The system picker may hand back cache or content-provider paths that can
+/// vanish or become unreadable later (which left the editor preview black
+/// with a dead play button). Clips always reference our own copy, so the
+/// file is guaranteed to exist for preview, export and reopened projects.
+Future<String> copyPickedVideoToAppStorage(String pickedPath) async {
+  final source = File(pickedPath);
+  if (!await source.exists()) {
+    throw FileSystemException('Picked video not found', pickedPath);
+  }
+  final docs = await getApplicationDocumentsDirectory();
+  final dir = Directory('${docs.path}/whipcut_media');
+  if (!await dir.exists()) await dir.create(recursive: true);
+  var ext = '';
+  final dot = pickedPath.lastIndexOf('.');
+  final sep = pickedPath.lastIndexOf('/');
+  if (dot > sep) ext = pickedPath.substring(dot);
+  final target = File('${dir.path}/${newClipId()}$ext');
+  await source.copy(target.path);
+  return target.path;
 }
 
 /// Builds a fresh video clip from an imported file.

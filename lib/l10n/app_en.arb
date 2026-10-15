@@ -471,5 +471,21 @@
   "updateCheckFailed": "Couldn't check for updates. Check your internet connection and try again.",
   "@updateCheckFailed": {
     "description": "Message when the update check itself fails (offline, timeout)"
+  },
+  "importFailed": "Couldn't import that video. Please try another one.",
+  "@importFailed": {
+    "description": "Message when copying an imported video into app storage fails"
+  },
+  "videoUnreadable": "Couldn't read that video file.",
+  "@videoUnreadable": {
+    "description": "Message when a picked video can't be opened for preview"
+  },
+  "previewLoadFailed": "Couldn't load the preview.",
+  "@previewLoadFailed": {
+    "description": "Message when the editor preview player fails to load a clip"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Generic retry action"
   }
 }
