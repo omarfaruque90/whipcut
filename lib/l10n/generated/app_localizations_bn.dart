@@ -128,6 +128,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get h265 => 'H.265';
 
   @override
+  String get howToUse => 'ব্যবহারবিধি';
+
+  @override
   String get importLut => '.cube ইমপোর্ট';
 
   @override
@@ -162,6 +165,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get newVersionAvailable => 'নতুন ভার্সন এসেছে';
 
   @override
+  String get next => 'পরবর্তী';
+
+  @override
   String get noAudioTracks => 'এখনও কোনো অডিও ট্র্যাক নেই';
 
   @override
@@ -175,6 +181,47 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noTextOverlays => 'এখনও কোনো টেক্সট যোগ করা হয়নি';
+
+  @override
+  String get onbColorDesc =>
+      'Exposure, contrast, saturation, temperature বদলান — অথবা নিজের .cube LUT import করুন।';
+
+  @override
+  String get onbColorTitle => 'প্রো-দের মতো কালার গ্রেডিং';
+
+  @override
+  String get onbExportDesc =>
+      'Preset বেছে নিন বা custom সেটিংস — resolution, FPS, bitrate, H.264/H.265 — তারপর গ্যালারিতে save করুন।';
+
+  @override
+  String get onbExportTitle => '4K-তে Export করুন';
+
+  @override
+  String get onbGetStarted => 'শুরু করুন';
+
+  @override
+  String get onbProjectDesc =>
+      '+ চাপুন, aspect ratio বেছে নিন (16:9, 9:16, 1:1, 4:5), তারপর গ্যালারি থেকে ভিডিও import করুন।';
+
+  @override
+  String get onbProjectTitle => 'নতুন প্রজেক্ট শুরু করুন';
+
+  @override
+  String get onbSkip => 'বাদ দিন';
+
+  @override
+  String get onbTimelineDesc =>
+      'ক্লিপে tap করে trim বা split করুন, speed বদলান, reverse করুন — ভুল হলে undo আছে।';
+
+  @override
+  String get onbTimelineTitle => 'টাইমলাইনে এডিট করুন';
+
+  @override
+  String get onbWelcomeDesc =>
+      'সিনেমাটোগ্রাফার ও কনটেন্ট ক্রিয়েটরদের জন্য ফ্রি, অফলাইন প্রো ভিডিও এডিটর। কোনো সাবস্ক্রিপশন বা ওয়াটারমার্ক নেই।';
+
+  @override
+  String get onbWelcomeTitle => 'Whipcut-এ স্বাগতম';
 
   @override
   String get openProject => 'খুলুন';
@@ -273,6 +320,19 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get timeline => 'টাইমলাইন';
+
+  @override
+  String get tipAutosave =>
+      'Autosave চালু আছে — ড্রাফট স্বয়ংক্রিয়ভাবে সেভ হয়।';
+
+  @override
+  String get tipNoWatermark => 'কোনো watermark নেই — export সবসময় ক্লিন।';
+
+  @override
+  String get tipOffline => 'সম্পূর্ণ offline চলে — ইন্টারনেট লাগে না।';
+
+  @override
+  String get tipsTitle => 'টিপস';
 
   @override
   String get top => 'উপরে';

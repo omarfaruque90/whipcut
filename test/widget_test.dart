@@ -3,8 +3,11 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:whipcut/data/project_repository.dart';
+import 'package:whipcut/features/onboarding/onboarding_providers.dart';
+import 'package:whipcut/features/onboarding/onboarding_screen.dart';
 import 'package:whipcut/features/projects/projects_screen.dart';
 import 'package:whipcut/main.dart';
 import 'package:whipcut/models/project.dart';
@@ -18,18 +21,32 @@ class _FakeProjectRepository extends ProjectRepository {
   Future<List<WhipcutProject>> loadProjects() async => const [];
 }
 
+Future<void> _pumpApp(WidgetTester tester) async {
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        projectRepositoryProvider
+            .overrideWithValue(_FakeProjectRepository()),
+      ],
+      child: const WhipcutApp(),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
 void main() {
-  testWidgets('App boots to the projects screen', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          projectRepositoryProvider
-              .overrideWithValue(_FakeProjectRepository()),
-        ],
-        child: const WhipcutApp(),
-      ),
-    );
-    await tester.pumpAndSettle();
+  testWidgets('First launch shows the onboarding', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await _pumpApp(tester);
+
+    expect(find.byType(OnboardingScreen), findsOneWidget);
+    expect(find.text('Welcome to Whipcut'), findsOneWidget);
+  });
+
+  testWidgets('App boots to the projects screen after onboarding',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({onboardingDoneKey: true});
+    await _pumpApp(tester);
 
     expect(find.byType(ProjectsScreen), findsOneWidget);
     // App bar shows the localized app name.

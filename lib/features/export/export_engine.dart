@@ -541,6 +541,16 @@ String _videoChain(TimelineClip clip, ExportSettings s) {
         (6000 + adj.temperature * 3000).round().clamp(3000, 9000);
     parts.add('colortemperature=temperature=$kelvin');
   }
+  // One-tap filter presets (Agent F): lifted blacks and teal-orange grade.
+  if (adj.lift > 1e-6) {
+    parts.add("curves=all='0/${_f(adj.lift.clamp(0.0, 0.5))} 1/1'");
+  }
+  if (adj.tealOrange > 1e-6) {
+    final t = adj.tealOrange.clamp(0.0, 1.0);
+    parts.add('colorbalance='
+        'gs=${_f(0.2 * t)}:bs=${_f(0.3 * t)}:'
+        'rh=${_f(0.2 * t)}:gh=${_f(0.1 * t)}');
+  }
   final lutPath = adj.lutPath;
   if (lutPath != null && lutPath.isNotEmpty) {
     parts.add("lut3d=file='${_escapeFilterArg(lutPath)}'");

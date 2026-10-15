@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whipcut/l10n/generated/app_localizations.dart';
 
+import '../onboarding/guide_screen.dart';
 import 'update_dialog.dart';
 import 'update_providers.dart';
 
@@ -61,6 +62,17 @@ class SettingsScreen extends ConsumerWidget {
                       )
                     : const Icon(Icons.chevron_right),
                 onTap: checking ? null : () => _manualCheck(context, ref),
+              );
+            },
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n.howToUse),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const GuideScreen()),
               );
             },
           ),

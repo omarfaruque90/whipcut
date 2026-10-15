@@ -332,6 +332,12 @@ abstract class AppLocalizations {
   /// **'H.265'**
   String get h265;
 
+  /// Settings row opening the user guide
+  ///
+  /// In en, this message translates to:
+  /// **'How to use'**
+  String get howToUse;
+
   /// Button to import a .cube LUT file
   ///
   /// In en, this message translates to:
@@ -398,6 +404,12 @@ abstract class AppLocalizations {
   /// **'New version available'**
   String get newVersionAvailable;
 
+  /// Onboarding: advance to the next page
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
   /// Empty state: no audio clips
   ///
   /// In en, this message translates to:
@@ -427,6 +439,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No text overlays yet'**
   String get noTextOverlays;
+
+  /// Onboarding page 4 body
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust exposure, contrast, saturation and temperature — or import your own .cube LUTs.'**
+  String get onbColorDesc;
+
+  /// Onboarding page 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'Grade like a pro'**
+  String get onbColorTitle;
+
+  /// Onboarding page 5 body
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a preset or go custom — resolution, FPS, bitrate, H.264/H.265 — and save to your gallery.'**
+  String get onbExportDesc;
+
+  /// Onboarding page 5 title
+  ///
+  /// In en, this message translates to:
+  /// **'Export in 4K'**
+  String get onbExportTitle;
+
+  /// Onboarding: finish and enter the app
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onbGetStarted;
+
+  /// Onboarding page 2 body
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to create a project, pick an aspect ratio (16:9, 9:16, 1:1, 4:5), then import videos from your gallery.'**
+  String get onbProjectDesc;
+
+  /// Onboarding page 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Start a new project'**
+  String get onbProjectTitle;
+
+  /// Onboarding: skip the intro
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onbSkip;
+
+  /// Onboarding page 3 body
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a clip to trim or split it, change speed, reverse it — and undo anytime.'**
+  String get onbTimelineDesc;
+
+  /// Onboarding page 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'Edit on the timeline'**
+  String get onbTimelineTitle;
+
+  /// Onboarding page 1 body
+  ///
+  /// In en, this message translates to:
+  /// **'A free, offline pro video editor for cinematographers and content creators. No subscription, no watermark.'**
+  String get onbWelcomeDesc;
+
+  /// Onboarding page 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Whipcut'**
+  String get onbWelcomeTitle;
 
   /// Action to open a project in the editor
   ///
@@ -619,6 +703,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Timeline'**
   String get timeline;
+
+  /// Guide tip: autosave
+  ///
+  /// In en, this message translates to:
+  /// **'Autosave is on — drafts are saved automatically.'**
+  String get tipAutosave;
+
+  /// Guide tip: no watermark
+  ///
+  /// In en, this message translates to:
+  /// **'No watermark, ever — your exports are clean.'**
+  String get tipNoWatermark;
+
+  /// Guide tip: offline
+  ///
+  /// In en, this message translates to:
+  /// **'Works fully offline — no internet needed.'**
+  String get tipOffline;
+
+  /// Guide tips section header
+  ///
+  /// In en, this message translates to:
+  /// **'Tips'**
+  String get tipsTitle;
 
   /// Top position preset
   ///

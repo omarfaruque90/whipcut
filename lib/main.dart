@@ -5,6 +5,8 @@ import 'package:whipcut/l10n/generated/app_localizations.dart';
 
 import 'core/locale_provider.dart';
 import 'core/theme.dart';
+import 'features/onboarding/onboarding_providers.dart';
+import 'features/onboarding/onboarding_screen.dart';
 import 'features/projects/projects_screen.dart';
 
 /// Whipcut entry point.
@@ -39,7 +41,28 @@ class WhipcutApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const ProjectsScreen(),
+      home: const _LaunchGate(),
+    );
+  }
+}
+
+/// First-run gate: shows the onboarding once, then the projects screen.
+///
+/// While the done flag is unknown a spinner shows; on error it fails
+/// open to the projects screen so a prefs failure never blocks launch.
+class _LaunchGate extends ConsumerWidget {
+  const _LaunchGate();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final done = ref.watch(onboardingDoneProvider);
+    return done.when(
+      data: (seen) =>
+          seen ? const ProjectsScreen() : const OnboardingScreen(),
+      loading: () => const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      ),
+      error: (_, error) => const ProjectsScreen(),
     );
   }
 }

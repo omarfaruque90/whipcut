@@ -19,6 +19,14 @@ class ColorAdjust {
   /// White-balance temperature shift. Range -1..1 (cool..warm).
   final double temperature;
 
+  /// Lifted blacks (faded-film look). Range 0..0.5. Exported as
+  /// `curves=all='0/<lift> 1/1'`.
+  final double lift;
+
+  /// Teal-shadows / orange-highlights grade. Range 0..1. Exported as a
+  /// `colorbalance` filter (teal in shadows, warm in highlights).
+  final double tealOrange;
+
   /// Absolute path to an imported `.cube` LUT file, or null for none.
   final String? lutPath;
 
@@ -27,6 +35,8 @@ class ColorAdjust {
     this.contrast = 1,
     this.saturation = 1,
     this.temperature = 0,
+    this.lift = 0,
+    this.tealOrange = 0,
     this.lutPath,
   });
 
@@ -42,6 +52,8 @@ class ColorAdjust {
     double? contrast,
     double? saturation,
     double? temperature,
+    double? lift,
+    double? tealOrange,
     Object? lutPath = _unset,
   }) {
     return ColorAdjust(
@@ -49,6 +61,8 @@ class ColorAdjust {
       contrast: contrast ?? this.contrast,
       saturation: saturation ?? this.saturation,
       temperature: temperature ?? this.temperature,
+      lift: lift ?? this.lift,
+      tealOrange: tealOrange ?? this.tealOrange,
       lutPath: identical(lutPath, _unset) ? this.lutPath : lutPath as String?,
     );
   }
@@ -59,6 +73,8 @@ class ColorAdjust {
       'contrast': contrast,
       'saturation': saturation,
       'temperature': temperature,
+      'lift': lift,
+      'tealOrange': tealOrange,
       'lutPath': lutPath,
     };
   }
@@ -71,11 +87,13 @@ class ColorAdjust {
           contrast == other.contrast &&
           saturation == other.saturation &&
           temperature == other.temperature &&
+          lift == other.lift &&
+          tealOrange == other.tealOrange &&
           lutPath == other.lutPath;
 
   @override
-  int get hashCode =>
-      Object.hash(exposure, contrast, saturation, temperature, lutPath);
+  int get hashCode => Object.hash(
+      exposure, contrast, saturation, temperature, lift, tealOrange, lutPath);
 
   factory ColorAdjust.fromJson(Map<String, dynamic> json) {
     double numOr(String key, double fallback) {
@@ -88,6 +106,8 @@ class ColorAdjust {
       contrast: numOr('contrast', 1),
       saturation: numOr('saturation', 1),
       temperature: numOr('temperature', 0),
+      lift: numOr('lift', 0),
+      tealOrange: numOr('tealOrange', 0),
       lutPath: json['lutPath'] as String?,
     );
   }

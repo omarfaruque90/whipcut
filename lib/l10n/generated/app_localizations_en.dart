@@ -128,6 +128,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get h265 => 'H.265';
 
   @override
+  String get howToUse => 'How to use';
+
+  @override
   String get importLut => 'Import .cube';
 
   @override
@@ -161,6 +164,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newVersionAvailable => 'New version available';
 
   @override
+  String get next => 'Next';
+
+  @override
   String get noAudioTracks => 'No audio tracks yet';
 
   @override
@@ -174,6 +180,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noTextOverlays => 'No text overlays yet';
+
+  @override
+  String get onbColorDesc =>
+      'Adjust exposure, contrast, saturation and temperature — or import your own .cube LUTs.';
+
+  @override
+  String get onbColorTitle => 'Grade like a pro';
+
+  @override
+  String get onbExportDesc =>
+      'Choose a preset or go custom — resolution, FPS, bitrate, H.264/H.265 — and save to your gallery.';
+
+  @override
+  String get onbExportTitle => 'Export in 4K';
+
+  @override
+  String get onbGetStarted => 'Get started';
+
+  @override
+  String get onbProjectDesc =>
+      'Tap + to create a project, pick an aspect ratio (16:9, 9:16, 1:1, 4:5), then import videos from your gallery.';
+
+  @override
+  String get onbProjectTitle => 'Start a new project';
+
+  @override
+  String get onbSkip => 'Skip';
+
+  @override
+  String get onbTimelineDesc =>
+      'Tap a clip to trim or split it, change speed, reverse it — and undo anytime.';
+
+  @override
+  String get onbTimelineTitle => 'Edit on the timeline';
+
+  @override
+  String get onbWelcomeDesc =>
+      'A free, offline pro video editor for cinematographers and content creators. No subscription, no watermark.';
+
+  @override
+  String get onbWelcomeTitle => 'Welcome to Whipcut';
 
   @override
   String get openProject => 'Open';
@@ -272,6 +319,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timeline => 'Timeline';
+
+  @override
+  String get tipAutosave => 'Autosave is on — drafts are saved automatically.';
+
+  @override
+  String get tipNoWatermark => 'No watermark, ever — your exports are clean.';
+
+  @override
+  String get tipOffline => 'Works fully offline — no internet needed.';
+
+  @override
+  String get tipsTitle => 'Tips';
 
   @override
   String get top => 'Top';
