@@ -10,6 +10,9 @@ class AppLocalizationsBn extends AppLocalizations {
   AppLocalizationsBn([String locale = 'bn']) : super(locale);
 
   @override
+  String get about => 'সম্পর্কে';
+
+  @override
   String get addText => 'টেক্সট যোগ করুন';
 
   @override
@@ -35,6 +38,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get center => 'মাঝখানে';
+
+  @override
+  String get checkForUpdates => 'আপডেট চেক করুন';
+
+  @override
+  String get checkingForUpdates => 'আপডেট চেক করা হচ্ছে…';
 
   @override
   String get codec => 'কোডেক';
@@ -65,6 +74,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get done => 'সম্পন্ন';
+
+  @override
+  String get downloadFailed => 'ডাউনলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
+
+  @override
+  String get downloadingUpdate => 'আপডেট ডাউনলোড হচ্ছে…';
 
   @override
   String get duration => 'দৈর্ঘ্য';
@@ -128,6 +143,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get language => 'ভাষা';
 
   @override
+  String get later => 'পরে';
+
+  @override
   String get lut => 'লুট';
 
   @override
@@ -139,6 +157,9 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get newProject => 'নতুন প্রজেক্ট';
+
+  @override
+  String get newVersionAvailable => 'নতুন ভার্সন এসেছে';
 
   @override
   String get noAudioTracks => 'এখনও কোনো অডিও ট্র্যাক নেই';
@@ -269,7 +290,21 @@ class AppLocalizationsBn extends AppLocalizations {
   String get undo => 'আনডু';
 
   @override
+  String get upToDate => 'আপনি সর্বশেষ ভার্সন ব্যবহার করছেন';
+
+  @override
+  String get update => 'আপডেট করুন';
+
+  @override
+  String updateAvailableMessage(Object version) {
+    return 'Whipcut $version ইনস্টলের জন্য প্রস্তুত।';
+  }
+
+  @override
   String get volume => 'ভলিউম';
+
+  @override
+  String get whatsNew => 'নতুন যা যা আছে';
 
   @override
   String get youtube4k => 'YouTube 4K';

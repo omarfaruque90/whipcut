@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FileProvider paths for the in-app updater: the downloaded APK lives in
+     the app's temp (cache) dir and is handed to the package installer. -->
+<paths>
+    <cache-path name="apk" path="." />
+    <external-cache-path name="apk_external" path="." />
+</paths>

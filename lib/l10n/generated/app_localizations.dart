@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
+  /// Settings/About screen title
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
   /// Button to add a new text overlay
   ///
   /// In en, this message translates to:
@@ -151,6 +157,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Center'**
   String get center;
+
+  /// Manual update check action
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get checkForUpdates;
+
+  /// Progress label while checking for updates
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates…'**
+  String get checkingForUpdates;
 
   /// Export video codec label
   ///
@@ -211,6 +229,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get done;
+
+  /// Error when the update APK download fails
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Please try again.'**
+  String get downloadFailed;
+
+  /// Title of the update download progress dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update…'**
+  String get downloadingUpdate;
 
   /// Clip or project duration label
   ///
@@ -332,6 +362,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get language;
 
+  /// Snooze the update prompt until tomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
+
   /// Section header for LUT (.cube) presets
   ///
   /// In en, this message translates to:
@@ -355,6 +391,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New Project'**
   String get newProject;
+
+  /// Title of the update prompt dialog
+  ///
+  /// In en, this message translates to:
+  /// **'New version available'**
+  String get newVersionAvailable;
 
   /// Empty state: no audio clips
   ///
@@ -608,11 +650,35 @@ abstract class AppLocalizations {
   /// **'Undo'**
   String get undo;
 
+  /// Message when no update is available
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re up to date'**
+  String get upToDate;
+
+  /// Confirm action: download and install the update
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// Body of the update prompt dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Whipcut {version} is ready to install.'**
+  String updateAvailableMessage(Object version);
+
   /// Audio volume label
   ///
   /// In en, this message translates to:
   /// **'Volume'**
   String get volume;
+
+  /// Release-notes section header in the update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get whatsNew;
 
   /// Export preset name
   ///

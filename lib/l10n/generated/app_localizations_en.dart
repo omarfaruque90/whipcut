@@ -10,6 +10,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get about => 'About';
+
+  @override
   String get addText => 'Add text';
 
   @override
@@ -35,6 +38,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get center => 'Center';
+
+  @override
+  String get checkForUpdates => 'Check for updates';
+
+  @override
+  String get checkingForUpdates => 'Checking for updates…';
 
   @override
   String get codec => 'Codec';
@@ -65,6 +74,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get done => 'Done';
+
+  @override
+  String get downloadFailed => 'Download failed. Please try again.';
+
+  @override
+  String get downloadingUpdate => 'Downloading update…';
 
   @override
   String get duration => 'Duration';
@@ -128,6 +143,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get language => 'Language';
 
   @override
+  String get later => 'Later';
+
+  @override
   String get lut => 'LUT';
 
   @override
@@ -138,6 +156,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newProject => 'New Project';
+
+  @override
+  String get newVersionAvailable => 'New version available';
 
   @override
   String get noAudioTracks => 'No audio tracks yet';
@@ -268,7 +289,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get undo => 'Undo';
 
   @override
+  String get upToDate => 'You\'re up to date';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String updateAvailableMessage(Object version) {
+    return 'Whipcut $version is ready to install.';
+  }
+
+  @override
   String get volume => 'Volume';
+
+  @override
+  String get whatsNew => 'What\'s new';
 
   @override
   String get youtube4k => 'YouTube 4K';

@@ -6,6 +6,9 @@ import 'package:whipcut/core/locale_provider.dart';
 import 'package:whipcut/core/theme.dart';
 import 'package:whipcut/data/project_repository.dart';
 import 'package:whipcut/features/editor/editor_screen.dart';
+import 'package:whipcut/features/update/settings_screen.dart';
+import 'package:whipcut/features/update/update_dialog.dart';
+import 'package:whipcut/features/update/update_providers.dart';
 import 'package:whipcut/l10n/generated/app_localizations.dart';
 import 'package:whipcut/models/project.dart';
 import 'package:whipcut/models/timeline.dart';
@@ -36,10 +39,37 @@ class _ProjectsBody extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final projects = ref.watch(projectListProvider);
 
+    // In-app update check (Khorcha-style): one prompt per day, silent on
+    // failure/offline. The controller is idempotent across rebuilds.
+    ref.listen(updateControllerProvider, (prev, next) {
+      final info = next.available;
+      if (info != null && prev?.available == null && context.mounted) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if (!context.mounted) return;
+          final go = await showUpdateAvailableDialog(context, info);
+          ref.read(updateControllerProvider.notifier).dismiss();
+          if (go && context.mounted) {
+            await showDownloadProgressDialog(context, ref, info);
+          }
+        });
+      }
+    });
+    ref.read(updateControllerProvider.notifier).checkOnStartup();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appName),
         actions: [
+          // Settings / About (manual update check lives here).
+          IconButton(
+            tooltip: l10n.settings,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              );
+            },
+          ),
           // Language toggle: EN <-> BN.
           TextButton(
             onPressed: () {
