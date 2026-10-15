@@ -4,7 +4,7 @@ description: "Whipcut — a pro-focused mobile video editor for cinematographers
 publish_to: 'none'
 
 # Version: build-name -> versionName, build-number -> versionCode on Android.
-version: 1.0.0+1
+version: 0.2.0+2
 
 environment:
   sdk: ^3.13.5
