@@ -100,17 +100,23 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
 
-    final info =
+    final result =
         await ref.read(updateControllerProvider.notifier).checkManually();
 
     if (!context.mounted) return;
     Navigator.of(context, rootNavigator: true).pop(); // close "checking"
 
-    if (info != null) {
-      final go = await showUpdateAvailableDialog(context, info);
+    final release = result.release;
+    if (release == null) {
+      // The check itself failed (offline, timeout…) — don't claim "up to date".
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.updateCheckFailed)),
+      );
+    } else if (result.available) {
+      final go = await showUpdateAvailableDialog(context, release);
       ref.read(updateControllerProvider.notifier).dismiss();
       if (go && context.mounted) {
-        await showDownloadProgressDialog(context, ref, info);
+        await showDownloadProgressDialog(context, ref, release);
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

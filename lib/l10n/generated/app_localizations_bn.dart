@@ -371,4 +371,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get zoom => 'জুম';
+
+  @override
+  String get updateCheckFailed =>
+      'আপডেট চেক করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।';
 }

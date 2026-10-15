@@ -285,10 +285,22 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final container = containerWith(release);
       addTearDown(container.dispose);
-      final info =
+      final result =
           await container.read(updateControllerProvider.notifier).checkManually();
-      expect(info, isNotNull);
-      expect(info!.version, '0.2');
+      expect(result.available, isTrue);
+      expect(result.release, isNotNull);
+      expect(result.release!.version, '0.2');
+      expect(container.read(updateControllerProvider).checking, isFalse);
+    });
+
+    test('manual check reports failure when the release fetch fails', () async {
+      SharedPreferences.setMockInitialValues({});
+      final container = containerWith(null);
+      addTearDown(container.dispose);
+      final result =
+          await container.read(updateControllerProvider.notifier).checkManually();
+      expect(result.available, isFalse);
+      expect(result.release, isNull);
       expect(container.read(updateControllerProvider).checking, isFalse);
     });
   });

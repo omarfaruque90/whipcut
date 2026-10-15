@@ -799,6 +799,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zoom'**
   String get zoom;
+
+  /// Message when the update check itself fails (offline, timeout)
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check for updates. Check your internet connection and try again.'**
+  String get updateCheckFailed;
 }
 
 class _AppLocalizationsDelegate

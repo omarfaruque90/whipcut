@@ -369,4 +369,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zoom => 'Zoom';
+
+  @override
+  String get updateCheckFailed =>
+      'Couldn\'t check for updates. Check your internet connection and try again.';
 }

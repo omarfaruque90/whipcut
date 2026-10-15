@@ -2,6 +2,8 @@
     <!-- Voice-over recording (record package). Runtime grant is requested
          by the audio screen before recording starts. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- In-app updater: version check against api.github.com + APK download. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- In-app updater: allows firing the package-installer intent for a
          downloaded APK (sideload-only app, no Play Store restrictions apply). -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />

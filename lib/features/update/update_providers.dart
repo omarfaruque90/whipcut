@@ -76,18 +76,21 @@ class UpdateController extends StateNotifier<UpdateState> {
     }
   }
 
-  /// Manual check from Settings. Returns the release when an update is
-  /// available, null otherwise (caller shows the "up to date" toast).
-  Future<ReleaseInfo?> checkManually() async {
+  /// Manual check from Settings. Returns the full check result so the caller
+  /// can distinguish "check failed" (release == null) from "up to date".
+  Future<UpdateCheckResult> checkManually() async {
     state = state.copyWith(checking: true, error: null);
     try {
       final result = await _ref.read(updateServiceProvider).checkNow();
-      final info = result.available ? result.release : null;
-      state = state.copyWith(checking: false, available: info);
-      return info;
+      state = state.copyWith(
+        checking: false,
+        available: result.available ? result.release : null,
+      );
+      return result;
     } catch (e) {
       state = state.copyWith(checking: false, error: e.toString());
-      return null;
+      return const UpdateCheckResult(
+          currentVersion: '', release: null, available: false);
     }
   }
 
