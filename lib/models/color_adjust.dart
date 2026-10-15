@@ -30,6 +30,13 @@ class ColorAdjust {
   /// Absolute path to an imported `.cube` LUT file, or null for none.
   final String? lutPath;
 
+  /// "Match from Photo" grade: a full ffmpeg `curves=...` filter string
+  /// (per-channel, 17 sample points) computed by histogram matching against
+  /// a reference photo. Null when no photo match is applied.
+  ///
+  /// Backward-compatible: older project JSON simply lacks this key.
+  final String? photoCurves;
+
   const ColorAdjust({
     this.exposure = 0,
     this.contrast = 1,
@@ -38,6 +45,7 @@ class ColorAdjust {
     this.lift = 0,
     this.tealOrange = 0,
     this.lutPath,
+    this.photoCurves,
   });
 
   /// Neutral adjustments — no visible change.
@@ -55,6 +63,7 @@ class ColorAdjust {
     double? lift,
     double? tealOrange,
     Object? lutPath = _unset,
+    Object? photoCurves = _unset,
   }) {
     return ColorAdjust(
       exposure: exposure ?? this.exposure,
@@ -64,6 +73,9 @@ class ColorAdjust {
       lift: lift ?? this.lift,
       tealOrange: tealOrange ?? this.tealOrange,
       lutPath: identical(lutPath, _unset) ? this.lutPath : lutPath as String?,
+      photoCurves: identical(photoCurves, _unset)
+          ? this.photoCurves
+          : photoCurves as String?,
     );
   }
 
@@ -76,6 +88,7 @@ class ColorAdjust {
       'lift': lift,
       'tealOrange': tealOrange,
       'lutPath': lutPath,
+      'photoCurves': photoCurves,
     };
   }
 
@@ -89,11 +102,19 @@ class ColorAdjust {
           temperature == other.temperature &&
           lift == other.lift &&
           tealOrange == other.tealOrange &&
-          lutPath == other.lutPath;
+          lutPath == other.lutPath &&
+          photoCurves == other.photoCurves;
 
   @override
   int get hashCode => Object.hash(
-      exposure, contrast, saturation, temperature, lift, tealOrange, lutPath);
+      exposure,
+      contrast,
+      saturation,
+      temperature,
+      lift,
+      tealOrange,
+      lutPath,
+      photoCurves);
 
   factory ColorAdjust.fromJson(Map<String, dynamic> json) {
     double numOr(String key, double fallback) {
@@ -109,6 +130,7 @@ class ColorAdjust {
       lift: numOr('lift', 0),
       tealOrange: numOr('tealOrange', 0),
       lutPath: json['lutPath'] as String?,
+      photoCurves: json['photoCurves'] as String?,
     );
   }
 }

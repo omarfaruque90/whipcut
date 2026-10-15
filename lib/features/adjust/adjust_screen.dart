@@ -106,6 +106,8 @@ class AdjustScreen extends ConsumerWidget {
                     clips[selected],
                     (_) => adjust,
                   ),
+                  videoPath: clips[selected].clip.mediaPath,
+                  clipDuration: clips[selected].clip.duration,
                 ),
                 const SizedBox(height: 20),
                 _SliderPanel(

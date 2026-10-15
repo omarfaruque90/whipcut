@@ -5,6 +5,7 @@ import 'package:whipcut/core/theme.dart';
 import 'package:whipcut/models/color_adjust.dart';
 
 import 'color_filters.dart';
+import 'photo_match_card.dart';
 
 /// One-tap filter gallery shown at the top of the Color panel.
 ///
@@ -17,6 +18,8 @@ class FilterGallery extends ConsumerWidget {
     super.key,
     required this.currentAdjust,
     required this.onApply,
+    this.videoPath,
+    this.clipDuration = 0,
   });
 
   /// The selected clip's current color adjustments.
@@ -25,6 +28,13 @@ class FilterGallery extends ConsumerWidget {
   /// Writes a new look into the selected clip. Receives the preset's
   /// [ColorAdjust] (LUT preserved by the caller).
   final ValueChanged<ColorAdjust> onApply;
+
+  /// Media path of the selected clip — needed by "Match from Photo" to
+  /// extract a representative frame. Null when there is no clip.
+  final String? videoPath;
+
+  /// Duration of the selected clip in seconds (0 = unknown).
+  final double clipDuration;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,6 +79,12 @@ class FilterGallery extends ConsumerWidget {
                   onTap: () => onApply(
                     ColorAdjust(lutPath: currentAdjust.lutPath),
                   ),
+                ),
+                PhotoMatchCard(
+                  videoPath: videoPath,
+                  clipDuration: clipDuration,
+                  currentAdjust: currentAdjust,
+                  onApply: onApply,
                 ),
                 for (final preset in kBuiltinPresets)
                   _PresetCard(
@@ -120,7 +136,8 @@ class FilterGallery extends ConsumerWidget {
       a.saturation == 1 &&
       a.temperature == 0 &&
       a.lift == 0 &&
-      a.tealOrange == 0;
+      a.tealOrange == 0 &&
+      (a.photoCurves == null || a.photoCurves!.isEmpty);
 
   static bool _matchesAdjust(ColorAdjust a, ColorAdjust b) =>
       (a.exposure - b.exposure).abs() < 1e-6 &&
@@ -128,7 +145,8 @@ class FilterGallery extends ConsumerWidget {
       (a.saturation - b.saturation).abs() < 1e-6 &&
       (a.temperature - b.temperature).abs() < 1e-6 &&
       (a.lift - b.lift).abs() < 1e-6 &&
-      (a.tealOrange - b.tealOrange).abs() < 1e-6;
+      (a.tealOrange - b.tealOrange).abs() < 1e-6 &&
+      a.photoCurves == b.photoCurves;
 
   Future<void> _showSaveDialog(
       BuildContext context, WidgetRef ref, bool isBn) async {

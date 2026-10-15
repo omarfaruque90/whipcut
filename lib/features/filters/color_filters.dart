@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whipcut/models/color_adjust.dart';
 
+import 'photo_match.dart';
+
 /// One-tap color filter presets (Agent F).
 ///
 /// A preset is a named [ColorAdjust] bundle: tapping a card writes the
@@ -40,7 +42,8 @@ class ColorFilterPreset {
       _eq(adjust.saturation, other.saturation) &&
       _eq(adjust.temperature, other.temperature) &&
       _eq(adjust.lift, other.lift) &&
-      _eq(adjust.tealOrange, other.tealOrange);
+      _eq(adjust.tealOrange, other.tealOrange) &&
+      adjust.photoCurves == other.photoCurves;
 
   static bool _eq(double a, double b) => (a - b).abs() < 1e-6;
 }
@@ -219,6 +222,7 @@ List<double> colorMatrixFor(ColorAdjust adjust) {
   m = _mul(_temperature(adjust.temperature), m);
   m = _mul(_tealOrange(adjust.tealOrange), m);
   m = _mul(_lift(adjust.lift), m);
+  m = _mul(_photoCurves(adjust.photoCurves), m);
   return m;
 }
 
@@ -305,6 +309,23 @@ List<double> _lift(double l) {
     f, 0, 0, 0, l, //
     0, f, 0, 0, l, //
     0, 0, f, 0, l, //
+    0, 0, 0, 1, 0, //
+  ];
+}
+
+/// "Match from Photo" preview approximation: least-squares linear fit of
+/// each channel's curve (see [linearFitForChannel]), expressed as a
+/// diagonal gain + offset per channel. Approximate — the export's true
+/// per-point `curves` filter is authoritative.
+List<double> _photoCurves(String? curvesFilter) {
+  if (curvesFilter == null || curvesFilter.isEmpty) return _identity();
+  final fits = [
+    for (var c = 0; c < 3; c++) linearFitForChannel(curvesFilter, c)
+  ];
+  return [
+    fits[0][0], 0, 0, 0, fits[0][1], //
+    0, fits[1][0], 0, 0, fits[1][1], //
+    0, 0, fits[2][0], 0, fits[2][1], //
     0, 0, 0, 1, 0, //
   ];
 }

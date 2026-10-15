@@ -50,6 +50,7 @@ dependencies:
   # then `FFmpegKit.execute('-i input.mp4 ...')`.
   # Export agent: this is the package to use for all rendering.
   ffmpeg_kit_flutter_new: ^4.6.7
+  image: ^4.12.0
 
 dev_dependencies:
   flutter_test:

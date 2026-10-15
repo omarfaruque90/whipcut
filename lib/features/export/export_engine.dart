@@ -551,6 +551,12 @@ String _videoChain(TimelineClip clip, ExportSettings s) {
         'gs=${_f(0.2 * t)}:bs=${_f(0.3 * t)}:'
         'rh=${_f(0.2 * t)}:gh=${_f(0.1 * t)}');
   }
+  // "Match from Photo" (photo agent): a full `curves=...` filter string
+  // baked by histogram matching against a reference photo.
+  final photoCurves = adj.photoCurves;
+  if (photoCurves != null && photoCurves.trim().isNotEmpty) {
+    parts.add(photoCurves.trim());
+  }
   final lutPath = adj.lutPath;
   if (lutPath != null && lutPath.isNotEmpty) {
     parts.add("lut3d=file='${_escapeFilterArg(lutPath)}'");
