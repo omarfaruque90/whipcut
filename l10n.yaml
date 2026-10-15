@@ -1,0 +1,12 @@
+# Localization config — owned by the scaffold agent.
+# ARB sources live in lib/l10n/*.arb. Generated code goes to
+# lib/l10n/generated/ (checked in, deterministic).
+# After adding keys to BOTH app_en.arb and app_bn.arb, run: `flutter gen-l10n`
+# Import in Dart: package:whipcut/l10n/generated/app_localizations.dart
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-dir: lib/l10n/generated
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+synthetic-package: false

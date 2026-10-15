@@ -1,0 +1,12 @@
+# Launcher icon config — owned by the scaffold agent.
+# Source: assets/images/app_icon.webp (Whipcut "Timeline Cut" logo, dark).
+# Run: `dart run flutter_launcher_icons`
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/app_icon.webp"
+  # Adaptive icon: dark background matching the brand (#101012),
+  # foreground is the logo artwork.
+  adaptive_icon_background: "#101012"
+  adaptive_icon_foreground: "assets/images/app_icon.webp"
+  min_sdk_android: 24

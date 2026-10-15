@@ -1,0 +1,70 @@
+name: whipcut
+description: "Whipcut — a pro-focused mobile video editor for cinematographers and content creators. Phase 1 MVP."
+# Prevents accidental publishing to pub.dev.
+publish_to: 'none'
+
+# Version: build-name -> versionName, build-number -> versionCode on Android.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+# ---------------------------------------------------------------------------
+# SCAFFOLD OWNERSHIP NOTE (for feature agents):
+# You are FORBIDDEN from editing this pubspec. If you need a new package,
+# hand the exact package name + version to the parent agent; the scaffold
+# agent (or parent) adds it. All Phase 1 packages were pre-installed here.
+# ---------------------------------------------------------------------------
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management (all feature teams use Riverpod providers)
+  flutter_riverpod: ^2.6.1
+
+  # In-app video preview (editor agent)
+  video_player: ^2.10.0
+
+  # Media import (projects agent)
+  image_picker: ^1.1.2
+  file_picker: ^10.3.7
+
+  # Filesystem + lightweight persistence (data agent)
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+
+  # Voice-over recording (audio agent)
+  record: ^6.0.0
+
+  # Stable IDs for clips/projects
+  uuid: ^4.5.1
+
+  # Dates/times formatting
+  intl: ^0.20.2
+
+  # Video export engine — MAINTAINED community fork of the archived
+  # ffmpeg_kit_flutter (arthenica, discontinued). Same API surface:
+  # `import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';`
+  # then `FFmpegKit.execute('-i input.mp4 ...')`.
+  # Export agent: this is the package to use for all rendering.
+  ffmpeg_kit_flutter_new: ^4.6.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # Launcher icons — see flutter_launcher_icons.yaml at project root.
+  flutter_launcher_icons: ^0.14.4
+
+# For information on the generic Dart part of this file, see:
+# https://dart.dev/tools/pub/pubspec
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  # App assets (feature agents: add your asset folders here via scaffold/parent)
+  assets:
+    - assets/images/
