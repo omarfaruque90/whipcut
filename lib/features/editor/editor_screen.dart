@@ -10,8 +10,10 @@ import 'package:whipcut/data/project_repository.dart';
 import 'package:whipcut/features/adjust/adjust_screen.dart';
 import 'package:whipcut/features/audio/audio_screen.dart';
 import 'package:whipcut/features/export/export_screen.dart';
+import 'package:whipcut/features/filters/color_filters.dart';
 import 'package:whipcut/features/text_overlay/text_overlay_screen.dart';
 import 'package:whipcut/l10n/generated/app_localizations.dart';
+import 'package:whipcut/models/color_adjust.dart';
 import 'package:whipcut/models/project.dart';
 import 'package:whipcut/models/timeline.dart';
 
@@ -367,7 +369,17 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
 
     Widget content;
     if (controller != null && controller.value.isInitialized) {
-      content = VideoPlayer(controller);
+      // Approximate in-app grade preview (ColorFiltered). The exact look is
+      // baked at export by ffmpeg — see Agent F's filter presets.
+      final clip = ref
+          .read(timelineEditorProvider(widget.project).notifier)
+          .firstPlayableVideoClip;
+      final adjust = clip?.colorAdjust ?? ColorAdjust.identity;
+      content = ColorFiltered(
+        colorFilter:
+            ColorFilter.matrix(colorMatrixFor(adjust)),
+        child: VideoPlayer(controller),
+      );
     } else if (_previewPath != null) {
       content = const Center(child: CircularProgressIndicator());
     } else {

@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whipcut/core/theme.dart';
 import 'package:whipcut/data/project_repository.dart';
+import 'package:whipcut/features/filters/filter_gallery.dart';
 import 'package:whipcut/l10n/generated/app_localizations.dart';
 import 'package:whipcut/models/color_adjust.dart';
 import 'package:whipcut/models/project.dart';
@@ -38,9 +39,11 @@ import 'package:whipcut/models/timeline.dart';
 ///
 /// ## Honesty note
 ///
-/// Sliders update the [ColorAdjust] model only. No pixel filtering is
-/// rendered in the preview — filters are baked at export (ffmpeg `eq` /
-/// `lut3d`, owned by the export agent). The screen says so explicitly.
+/// Sliders and one-tap filters update the [ColorAdjust] model only. The
+/// editor preview shows an approximation (ColorFiltered); the true pixel
+/// filtering is baked at export (ffmpeg `eq` / `colortemperature` /
+/// `curves` / `colorbalance` / `lut3d`, owned by the export agent). The
+/// screen says so explicitly.
 class AdjustScreen extends ConsumerWidget {
   const AdjustScreen({super.key, required this.project});
 
@@ -93,6 +96,16 @@ class AdjustScreen extends ConsumerWidget {
                   selected: selected,
                   onSelect: (i) =>
                       ref.read(_selectedClipIndexProvider.notifier).state = i,
+                ),
+                const SizedBox(height: 20),
+                FilterGallery(
+                  currentAdjust: clips[selected].clip.colorAdjust,
+                  onApply: (adjust) => _applyToSelectedClip(
+                    ref,
+                    live,
+                    clips[selected],
+                    (_) => adjust,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 _SliderPanel(
